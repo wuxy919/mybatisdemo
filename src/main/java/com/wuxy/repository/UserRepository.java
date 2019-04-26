@@ -92,4 +92,6 @@ public interface UserRepository {
      */
     public String findNameById(int id);
 
+    public List<User> findByIds(User user);
+
 }

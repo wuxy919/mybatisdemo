@@ -1,5 +1,7 @@
 package com.wuxy.entity;
 
+import java.util.List;
+
 /**
  * @author: wuxy
  * @create: 2019-04-24 17:20
@@ -9,6 +11,7 @@ public class User {
     private String username;
     private String password;
     private int age;
+    private List<Integer> ids;
 
     public int getId() {
         return id;
@@ -40,6 +43,14 @@ public class User {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public List<Integer> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<Integer> ids) {
+        this.ids = ids;
     }
 
     @Override

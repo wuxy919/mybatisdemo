@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wuxy.repository.UserRepository">
-
+    <!-- 开启二级缓存 -->
+    <cache type="org.mybatis.caches.ehcache.EhcacheCache">
+        <!-- 缓存创建之后，最后一次访问缓存的时间至缓存失效的时间间隔 -->
+        <property name="timeToIdleSeconds" value="3600" />
+        <!-- 缓存自创建时间起至失效的时间间隔 -->
+        <property name="timeToLiveSeconds" value="3600" />
+        <!-- 缓存回收策略，LRU 移除近期使用最少的对象 -->
+        <property name="memoryStoreEvictionPolicy" value="LRU" />
+    </cache>
     <insert id="save" parameterType="com.wuxy.entity.User">
         insert into t_user(username, password, age) values(#{username}, #{password}, #{age});
     </insert>
@@ -10,8 +18,24 @@
         delete from t_user where id = #{id};
     </delete>
 
-    <update id="update" parameterType="com.wuxy.entity.User">
+    <!--<update id="update" parameterType="com.wuxy.entity.User">
         update t_user set username = #{username}, password = #{password}, age = #{age} where id = #{id};
+    </update>-->
+
+    <update id="update" parameterType="com.wuxy.entity.User">
+        update t_user
+        <set>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="age != 0">
+                age = #{age}
+            </if>
+        </set>
+        where id = #{id}
     </update>
 
     <select id="findById" parameterType="int" resultType="com.wuxy.entity.User">
@@ -34,8 +58,64 @@
         select * from t_user where username = #{param1} and age = #{param2};
     </select>
 
-    <select id="findByUser" parameterType="com.wuxy.entity.User" resultType="com.wuxy.entity.User">
+    <!--<select id="findByUser" parameterType="com.wuxy.entity.User" resultType="com.wuxy.entity.User">
         select * from t_user where username = #{username} and age = #{age};
+    </select>-->
+
+    <!--<select id="findByUser" parameterType="com.wuxy.entity.User" resultType="com.wuxy.entity.User">
+        select * from t_user
+        <where>
+            <if test="id != 0">
+                id = #{id}
+            </if>
+            <if test="username != null">
+                and username = #{username}
+            </if>
+            <if test="password != null">
+                and password = #{password}
+            </if>
+            <if test="age != 0">
+                and age = #{age}
+            </if>
+        </where>
+    </select>-->
+
+    <!--<select id="findByUser" parameterType="com.wuxy.entity.User" resultType="com.wuxy.entity.User">
+        select * from t_user
+        <where>
+            <choose>
+                <when test="id != 0">
+                    id = #{id}
+                </when>
+                <when test="username != null">
+                    and username = #{username}
+                </when>
+                <when test="password != null">
+                    and password = #{password}
+                </when>
+                <when test="age != 0">
+                    and age = #{age}
+                </when>
+            </choose>
+        </where>
+    </select>-->
+
+    <select id="findByUser" parameterType="com.wuxy.entity.User" resultType="com.wuxy.entity.User">
+        select * from t_user
+        <trim prefix="where" prefixOverrides="and">
+            <if test="id != 0">
+                id = #{id}
+            </if>
+            <if test="username != null">
+                and username = #{username}
+            </if>
+            <if test="password != null">
+                and password = #{password}
+            </if>
+            <if test="age != 0">
+                and age = #{age}
+            </if>
+        </trim>
     </select>
 
     <select id="count" resultType="int">
@@ -48,6 +128,15 @@
 
     <select id="findNameById" parameterType="int" resultType="java.lang.String">
         select username from t_user where id = #{id};
+    </select>
+    
+    <select id="findByIds" parameterType="com.wuxy.entity.User" resultType="com.wuxy.entity.User">
+        select * from t_user
+        <where>
+            <foreach collection="ids" open="id in (" close=")" item="id" separator=",">
+                #{id}
+            </foreach>
+        </where>
     </select>
 
 </mapper>

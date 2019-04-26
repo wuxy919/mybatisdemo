@@ -6,10 +6,11 @@
         <id property="id" column="sid"></id>
         <result property="name" column="sname"></result>
         <!-- 映射 classes -->
-        <association property="classes" javaType="com.wuxy.entity.Classes">
+        <!--<association property="classes" javaType="com.wuxy.entity.Classes">
             <id property="id" column="cid"></id>
             <result property="name" column="cname"></result>
-        </association>
+        </association>-->
+        <association property="classes" javaType="com.wuxy.entity.Classes" select="com.wuxy.entity.Classes.findById" column="cid"></association>
     </resultMap>
 
     <select id="findById" parameterType="int" resultMap="studentMap">

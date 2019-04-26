@@ -54,17 +54,17 @@ public class Test2 {
 //        Classes classes = new Classes();
 //        classes.setName("五班");
 //        classesRepository.save(classes);
-//        List<Classes> list1 = classesRepository.findAll();
-//        for (Classes classes1 : list1) {
-//            System.out.println(classes1);
-//        }
-        Classes classes = classesRepository.findById(5);
-        List<Student> list = classes.getStudents();
-        for (Student student : list) {
-            studentRepository.delete(student);
+        List<Classes> list1 = classesRepository.findAll();
+        for (Classes classes1 : list1) {
+            System.out.println(classes1);
         }
-
-        classesRepository.deleteById(5);
+//        Classes classes = classesRepository.findById(5);
+//        List<Student> list = classes.getStudents();
+//        for (Student student : list) {
+//            studentRepository.delete(student);
+//        }
+//
+//        classesRepository.deleteById(5);
         sqlSession.commit();
         sqlSession.close();
     }
