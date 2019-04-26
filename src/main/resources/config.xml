@@ -9,7 +9,7 @@
             <!-- 配置数据库连接信息 -->
             <dataSource type="POOLED">
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"></property>
-                <property name="url" value="jdbc:mysql://localhost:3306/mbtest?useUnicode=true&amp;characterEncoding=UTF-8&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"></property>
+                <property name="url" value="jdbc:mysql://localhost:3306/mybatis?useUnicode=true&amp;characterEncoding=UTF-8&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"></property>
                 <property name="username" value="root"></property>
                 <property name="password" value="123456"></property>
             </dataSource>
@@ -19,6 +19,10 @@
     <!-- 注册 UserMapper.xml -->
     <mappers>
         <mapper resource="com/wuxy/repository/UserRepository.xml"></mapper>
+        <mapper resource="com/wuxy/repository/StudentRepository.xml"></mapper>
+        <mapper resource="com/wuxy/repository/ClassesRepository.xml"></mapper>
+        <mapper resource="com/wuxy/repository/CustomerRepository.xml"></mapper>
+        <mapper resource="com/wuxy/repository/GoodsRepository.xml"></mapper>
     </mappers>
 
 </configuration>

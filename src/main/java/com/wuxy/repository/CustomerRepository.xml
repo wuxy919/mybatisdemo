@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxy.repository.CustomerRepository">
+
+    <resultMap id="customerMap" type="com.wuxy.entity.Customer">
+        <id property="id" column="cid"></id>
+        <result property="name" column="cname"></result>
+        <!-- 映射 Goods -->
+        <collection property="goods" ofType="com.wuxy.entity.Goods">
+            <id property="id" column="gid"></id>
+            <result property="name" column="gname"></result>
+        </collection>
+    </resultMap>
+
+    <select id="findById" parameterType="int" resultMap="customerMap">
+        select c.id cid, c.name cname, g.id gid, g.name gname
+        from customer c, goods g, customer_goods cg where c.id = cg.cid and g.id = cg.gid and c.id = #{id};
+    </select>
+
+    <select id="findAll" resultMap="customerMap">
+        select c.id cid, c.name cname, g.id gid, g.name gname
+        from customer c, goods g, customer_goods cg where c.id = cg.cid and g.id = cg.gid;
+    </select>
+
+    <insert id="save" parameterType="com.wuxy.entity.Customer">
+        insert into customer(name) values(#{name});
+    </insert>
+
+    <update id="update" parameterType="com.wuxy.entity.Customer">
+        update customer set name = #{name} where id = #{id};
+    </update>
+
+    <insert id="saveGoods" parameterType="int">
+        insert into customer_goods(cid, gid) values(#{param1}, #{param2});
+    </insert>
+
+    <delete id="clearGoods" parameterType="int">
+        delete from customer_goods where cid = #{cid}
+    </delete>
+
+    <delete id="deleteById" parameterType="com.wuxy.entity.Customer">
+        delete from customer where id = #{id};
+    </delete>
+
+</mapper>

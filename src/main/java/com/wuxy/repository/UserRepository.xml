@@ -46,4 +46,8 @@
         select count(*) from t_user;
     </select>
 
+    <select id="findNameById" parameterType="int" resultType="java.lang.String">
+        select username from t_user where id = #{id};
+    </select>
+
 </mapper>

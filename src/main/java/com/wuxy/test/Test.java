@@ -49,8 +49,10 @@ public class Test {
 //        User user1 = userRepository.findByUser(user);
 //        System.out.println(user1);
 //        int result = userRepository.count();
-        Integer result = userRepository.getCount();
-        System.out.println(result);
+//        Integer result = userRepository.getCount();
+//        System.out.println(result);
+        String name = userRepository.findNameById(1);
+        System.out.println(name);
 //        sqlSession.commit();
         sqlSession.close();
     }

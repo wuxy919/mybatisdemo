@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxy.repository.StudentRepository">
+
+    <resultMap id="studentMap" type="com.wuxy.entity.Student">
+        <id property="id" column="sid"></id>
+        <result property="name" column="sname"></result>
+        <!-- 映射 classes -->
+        <association property="classes" javaType="com.wuxy.entity.Classes">
+            <id property="id" column="cid"></id>
+            <result property="name" column="cname"></result>
+        </association>
+    </resultMap>
+
+    <select id="findById" parameterType="int" resultMap="studentMap">
+        select s.id sid, s.name sname, c.id cid, c.name cname from student s, classes c where s.cid = c.id and s.id = #{id};
+    </select>
+
+    <insert id="save" parameterType="com.wuxy.entity.Student">
+        insert into student(name, cid) values(#{name}, #{classes.id})
+    </insert>
+
+    <update id="update" parameterType="com.wuxy.entity.Student">
+        update student set name = #{name}, cid = #{classes.id} where id = #{id};
+    </update>
+
+    <delete id="delete" parameterType="com.wuxy.entity.Student">
+        delete from student where id = #{id};
+    </delete>
+
+    <select id="findAll" resultMap="studentMap">
+        select s.id sid, s.name sname, c.id cid, c.name cname
+        from student s, classes c where s.cid = c.id;
+    </select>
+
+</mapper>

@@ -85,4 +85,11 @@ public interface UserRepository {
      */
     public Integer getCount();
 
+    /**
+     * 通过id查询username
+     * @param id
+     * @return
+     */
+    public String findNameById(int id);
+
 }
