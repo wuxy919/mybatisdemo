@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="testTables" targetRuntime="MyBatis3">
+        <!-- 配置数据库连接信息 -->
+        <jdbcConnection
+                driverClass="com.mysql.cj.jdbc.Driver"
+                connectionURL="jdbc:mysql://localhost:3306/mybatis?useUnicode=true&amp;characterEncoding=UTF-8&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"
+                userId="root"
+                password="123456"
+        ></jdbcConnection>
+        <!-- 实体类 -->
+        <javaModelGenerator targetPackage="com.wuxy.entity" targetProject="./mbg/src/main/java"></javaModelGenerator>
+
+        <!-- Mapper.xml -->
+        <sqlMapGenerator targetPackage="com.wuxy.repository" targetProject="./mbg/src/main/java"></sqlMapGenerator>
+
+        <!-- Mapper.java -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.wuxy.repository" targetProject="./mbg/src/main/java"></javaClientGenerator>
+
+        <!-- 数据库 -->
+        <table tableName="student" domainObjectName="Student"></table>
+    </context>
+</generatorConfiguration>
